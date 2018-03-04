@@ -1,13 +1,44 @@
 package banka;
 
-public class Transfer {
+public class Transfer extends Racun{
 
-	public void transferNovca(Racun rac1,Racun rac2, double iznos){
-		if(rac1.getListaRacuna().contains(rac1) && rac2.getListaRacuna().contains(rac2) && rac2.getIznosRacuna()>=iznos){
-			rac1.setIznosRacuna(rac1.getIznosRacuna()+iznos);
-			rac2.setIznosRacuna(rac2.getIznosRacuna()-iznos);
+	public void transferNovca(int id1, int id2, double iznos){
+	
+		int idPosiljaoca=provjeraPosiljaoca(id1);
+		int idPrimaoca=provjeraPrimaoca(id2);
+		
+		double stanjePosiljaoca=racuni.get(idPosiljaoca).getIznosRacuna();
+		double stanjePrimaoca=racuni.get(idPrimaoca).getIznosRacuna();
+		
+		if(stanjePosiljaoca>=iznos){
+			racuni.get(idPosiljaoca).setIznosRacuna(stanjePosiljaoca-iznos);
+			racuni.get(idPrimaoca).setIznosRacuna(stanjePrimaoca+iznos);
 		}else{
-			System.out.println("Nije moguce izvrsiti transakciju.");
+			System.out.println("Nedovoljan iznos racuna.");
 		}
+		
 	}
+	
+	private int provjeraPosiljaoca(int id1){
+		
+		int idPosiljaoca=-1;
+		for(Racun rc : racuni){
+			if(id1==rc.getBrojRacuna()){
+				idPosiljaoca=racuni.indexOf(rc);	
+			}
+		}
+		return idPosiljaoca;
+	}
+	private int provjeraPrimaoca(int id2){
+		
+		int idPrimaoca=-1;
+		for(Racun rc : racuni){
+			if(id2==rc.getBrojRacuna()){
+				idPrimaoca=racuni.indexOf(rc);	
+			}
+		}
+		return idPrimaoca;
+	}
+	
+	
 }
