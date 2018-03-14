@@ -19,31 +19,45 @@ public class Prikaz {
 			try{
 				odgovor=unos.nextInt();
 			}catch(InputMismatchException ex){
-				System.out.println("Pogresan unos, unesite broj od 1 do 4!");
+				System.out.println("Pogresan unos.");
 				unos.nextLine();
 			}
 			switch(odgovor){
 			case 1:
 				rac=new Racun();
 				System.out.println("Unesite id racuna, Vase ime i iznos na racunu: ");
-				rac.setBrojRacuna(unos.nextInt());
-				rac.setImeVlasnika(unos.next());
-				rac.setIznosRacuna(unos.nextDouble());
-				rac.unosPodataka();
+				try{
+					rac.setBrojRacuna(unos.nextInt());
+					rac.setImeVlasnika(unos.next());
+					rac.setIznosRacuna(unos.nextDouble());
+					rac.unosPodataka();
+				}catch(InputMismatchException ex){
+					System.out.println("Pogresan unos.");
+				}
 				System.out.println("Racun uspjesno kreiran");
 				break;
 			case 2:
-				Transfer t=new Transfer();
-				System.out.println("Unesite ID svog racuna: ");
-				int id1=unos.nextInt();
-				System.out.println("Unesite ID racuna na koji zelite poslati novac: ");
-				int id2=unos.nextInt();
-				System.out.println("Unesite iznos transakcije: ");
-				double iznos=unos.nextDouble();
-				t.transferNovca(id1, id2, iznos);
+				try{
+					System.out.println("Unesite ID svog racuna: ");
+					int id1=unos.nextInt();
+					System.out.println("Unesite ID racuna na koji zelite poslati novac: ");
+					int id2=unos.nextInt();
+					System.out.println("Unesite iznos transakcije: ");
+					double iznos=unos.nextDouble();
+					rac.transferNovca(id1, id2, iznos);
+					rac.unosPodataka();
+				}catch(InputMismatchException ex){
+					System.out.println("Pogresan unos.");
+				}
+				
 				break;
 			case 3:
-				rac.ispisPodataka();
+				try{
+					rac.ispisPodataka();
+				}
+				catch(NullPointerException e){
+					System.out.println("Nema podataka! Pokusajte novo.");
+				}
 				break;
 			case 4:
 				System.out.println("Dovidjenja!");

@@ -11,7 +11,7 @@ public class Racun {
 	private int brojRacuna;
 	private double iznosRacuna;
 	private String imeVlasnika;
-	public static ArrayList<Racun> racuni = new ArrayList<>();
+	private static ArrayList<Racun> racuni = new ArrayList<>();
 	
 	public Racun(){
 		racuni.add(this);
@@ -80,6 +80,50 @@ public class Racun {
 		}
 		writer.close();
 	}
+	
+	
+	
+	
+	public void transferNovca(int id1, int id2, double iznos){
+		
+		int idPosiljaoca=provjeraPosiljaoca(id1);
+		int idPrimaoca=provjeraPrimaoca(id2);
+		
+		double stanjePosiljaoca=Racun.getRacuni().get(idPosiljaoca).getIznosRacuna();
+		double stanjePrimaoca=Racun.getRacuni().get(idPrimaoca).getIznosRacuna();
+		
+		if(stanjePosiljaoca>=iznos){
+			Racun.getRacuni().get(idPosiljaoca).setIznosRacuna(stanjePosiljaoca-iznos);
+			Racun.getRacuni().get(idPrimaoca).setIznosRacuna(stanjePrimaoca+iznos);
+		}else{
+			System.out.println("Nedovoljan iznos racuna.");
+		}
+		
+	}
+	private int provjeraPosiljaoca(int id1){
+		
+		for(Racun rc : racuni){
+			if(id1==rc.getBrojRacuna()){
+				int idPosiljaoca=Racun.getRacuni().indexOf(rc);
+				return idPosiljaoca;
+			}
+		}
+		return id1;
+	}
+	private int provjeraPrimaoca(int id2){
+		
+		for(Racun rc : racuni){
+			if(id2==rc.getBrojRacuna()){
+				int idPrimaoca=Racun.getRacuni().indexOf(rc);	
+				return idPrimaoca;
+			}
+		}
+		return id2;
+	}
+	
+	
+	
+	
 	
 	public void ispisPodataka() throws IOException{
 		
